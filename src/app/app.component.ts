@@ -1,39 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { Article } from './article';
-import { ArticleService } from './article.service';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
-	title:string;
-	version: string;
-	editing: boolean;
-	articles: Array<Article>;
-	editId: number;
+export class AppComponent {
+  title: string;
+  articles: Array<Article>;
+  editing: boolean;
+  editArticle: Article;
 
-	constructor(private articleService: ArticleService) {
-		this.title = 'BetterBlog with RxJs !';
-		this.version = 'v0.1.0';
-		this.editing = false;
-		this.articles = new Array<Article>();
-		this.articleService.articles.subscribe(
-			(articles: Array<Article>) => {
-				this.articles = articles;
-				this.editing = false;
-				this.editId = undefined;
-			});
-	}
+  constructor() {
+    this.editing = false;
+    this.editArticle = new Article(0, '');
+    this.title = 'Better blog';
+    this.articles = new Array();
+    this.articles.push(new Article(99, 'Article de test', 'Super description...'));
+  }
 
-	ngOnInit() {
-		this.articleService.initialize();
-	}
+  addArticle() {
+    this.editing = true;
+  }
 
-	showUpdate(id: number) {
-		this.editId = id;
-		this.editing = true;
-	}
+  backToList() {
+    setTimeout(() => (this.editing = false));
+  }
+
+  saveArticle(myForm: NgForm) {
+    // Utilisation de JSON pour sérialiser puis déserialiser l'article afin
+    // d'obtenir une nouvelle instance d'objet utilisant une autre adresse mémoire.
+    this.articles.push(JSON.parse(JSON.stringify(this.editArticle)));
+    myForm.resetForm();
+  }
 }
