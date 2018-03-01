@@ -6,8 +6,8 @@ export class Article {
          description: string;
          author: string;
          date: moment.Moment;
-         //git
-         constructor(id: number, title: string, description?: string,
+
+         constructor(id?: number, title?: string, description?: string,
            author: string = 'Serge') {
            this.id = id;
            this.title = title;
@@ -17,23 +17,3 @@ export class Article {
          }
        }
 
-// [{
-//     "id":: 0,
-//     "title":: "Article n 1",
-//     "description"::"lorem ipsum",
-//     "author":: "jeremy",
-//     "date" ::"28-02-2018"
-// },{
-//     "id":: 1,
-//     "title":: "Article n2",
-//     "description"::"lorem ipsum",
-//     "author":: "jeremy",
-//     "date" ::"28-02-2018"
-// },
-// "id":: 2,
-// "title":: "Article n 3",
-// "description"::"lorem ipsum",
-// "author":: "jeremy",
-// "date" ::"28-02-2018"
-// }
-// ]
